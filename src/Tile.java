@@ -22,6 +22,8 @@ public class Tile {
         return val;
     }
 
+    public boolean getKnown() { return known; }
+
     public boolean incrament() {
         if (val < 9) {
             val++;

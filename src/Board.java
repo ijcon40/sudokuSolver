@@ -42,5 +42,42 @@ public class Board {
         }
     }
 
+    public boolean valid(int xPos, int yPos) {
+        for (int i = 0; i < 9; i++) {
+            if (game[xPos][yPos].getVal() == game[i][yPos].getVal() && i != xPos) {
+                return false;
+            }
+
+            if (game[xPos][yPos].getVal() == game[xPos][i].getVal() && i != yPos) {
+                return false;
+            }
+        }
+
+        int xStart = 3 * (xPos / 3);
+        int yStart = 3 * (yPos / 3);
+
+        for (int i = xStart; i < xStart + 3; i++) {
+            for (int j = yStart; j < yStart + 3; j++) {
+                if (game[xPos][yPos].getVal() == game[i][j].getVal() && i != xPos && j != yPos) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void solve(int xPos, int yPos, boolean backTracking) {
+
+        int nextXPos, nextYPos;
+
+        if (backTracking && ) {
+
+        }
+
+        if (backTracking == false && game[xPos][yPos].getKnown()) {
+            solve()
+        }
+    }
+
 
 }

@@ -68,14 +68,48 @@ public class Board {
 
     public void solve(int xPos, int yPos, boolean backTracking) {
 
-        int nextXPos, nextYPos;
+        print();
+        System.out.println(xPos + " " + yPos);
 
-        if (backTracking && ) {
 
+        int forXPos, forYPos = yPos;
+        int backXPos, backYPos = yPos;
+
+        backXPos = (9 + xPos - 1) % 9;
+        if (xPos == 0) {
+            backYPos--;
         }
 
-        if (backTracking == false && game[xPos][yPos].getKnown()) {
-            solve()
+        forXPos = (9 + xPos + 1) % 9;
+        if (xPos == 8) {
+            forYPos++;
+        }
+
+
+        if (yPos == 10) {
+            print();
+        } else if (game[xPos][yPos].getKnown() && backTracking) {
+
+            if (game[backXPos][backYPos].getKnown()) {
+                solve(backXPos, backYPos, true);
+            } else {
+                solve(backXPos, backYPos, false);
+            }
+
+        } else if (game[xPos][yPos].getKnown() && !backTracking) {
+
+            solve(forXPos, forYPos, false);
+
+        } else if (valid(xPos, yPos)) {
+            solve(forXPos, forYPos, false);
+        } else if (!valid(xPos, yPos)) {
+
+            if (game[xPos][yPos].increment()) {
+                solve(xPos, yPos, false);
+            } else {
+                solve(backXPos, backYPos, backTracking);
+            }
+
         }
     }
 

@@ -14,6 +14,7 @@ public class Tester {
         // System.out.println(b.getTileInfo(0, 0));
 
         b.print();
+        b.solve(0, 0, false);
     }
 
 }

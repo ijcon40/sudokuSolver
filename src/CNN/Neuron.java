@@ -4,6 +4,7 @@ public class Neuron {
     private double weights[];
     private double bias;
     private double ReLuSlope;
+    private final double LEARNING_RATE = 0.1;
     private Equation ReLu = (double... x)->{
         //A Leaky ReLU function abbreviated for simpler notation
         if(x[0]>0){
@@ -51,8 +52,8 @@ public class Neuron {
     public double getActivatedOutput(double[] inputs){
         //Adding the saving of the ReLu slope with respect to the outputs should make the backprop much easier
         double val = ReLu.resolve(getRawOutput(inputs));
-        if(val<0){
-            ReLuSlope = .01;
+        if(val<0.0){
+            ReLuSlope = 0.01;
         }
         else{
             ReLuSlope = 1.0;
@@ -64,7 +65,21 @@ public class Neuron {
         //So dL/dO will be passed, but the first layer will be all 1 since they are additive
         //Next we just need to see how the previous layer outputs affected this one neuron. Bias can be ignored since derivative of bias is just 0
         //First Step: Take the derivative of all the prevDerivs with respect to ReLu
-        return null;
+        double dOdL = ReLuSlope;
+        //for each input we will need to calculate dOdI in order to provide a accurate
+        //This should be pretty easy as per I dOdI is Wi
+        double[] derivatives = new double[prevDerivs.length];
+        int I = 0;
+        for(double deriv: derivatives){
+            deriv = ReLuSlope*weights[I];
+            adjustWeight(I, deriv);
+            I++;
+        }
+        return derivatives;
+    }
+
+    private void adjustWeight(int weight, double dIdL){
+        weights[weight]*=dIdL*LEARNING_RATE;
     }
 
 

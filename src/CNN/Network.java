@@ -38,6 +38,7 @@ public class Network{
 
     public double[] backProp(double[] passedDerivatives, int layer){
         //Resolve: if layer==-1 then return the passed derivatives for convolution back prop
+        return null;
     }
 
 

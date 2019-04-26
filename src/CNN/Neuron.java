@@ -64,6 +64,7 @@ public class Neuron {
         //So dL/dO will be passed, but the first layer will be all 1 since they are additive
         //Next we just need to see how the previous layer outputs affected this one neuron. Bias can be ignored since derivative of bias is just 0
         //First Step: Take the derivative of all the prevDerivs with respect to ReLu
+        return null;
     }
 
 

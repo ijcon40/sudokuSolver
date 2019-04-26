@@ -43,6 +43,11 @@ public class Board {
     }
 
     public boolean valid(int xPos, int yPos) {
+
+        if (game[xPos][yPos].getVal() == 0) {
+            return false;
+        }
+
         for (int i = 0; i < 9; i++) {
             if (game[xPos][yPos].getVal() == game[i][yPos].getVal() && i != xPos) {
                 return false;
@@ -86,9 +91,9 @@ public class Board {
         }
 
 
-        if (yPos == 10) {
+        if (yPos == 9) { //base case
             print();
-        } else if (game[xPos][yPos].getKnown() && backTracking) {
+        } else if (game[xPos][yPos].getKnown() && backTracking) { //on a known tile and back tracking
 
             if (game[backXPos][backYPos].getKnown()) {
                 solve(backXPos, backYPos, true);
@@ -96,22 +101,30 @@ public class Board {
                 solve(backXPos, backYPos, false);
             }
 
-        } else if (game[xPos][yPos].getKnown() && !backTracking) {
+        } else if (game[xPos][yPos].getKnown() && !backTracking) { //on a known tile and not back tracking
 
             solve(forXPos, forYPos, false);
 
-        } else if (valid(xPos, yPos)) {
-            solve(forXPos, forYPos, false);
-        } else if (!valid(xPos, yPos)) {
+        } else if (!valid(xPos, yPos)) { //the tile is invalid
 
             if (game[xPos][yPos].increment()) {
                 solve(xPos, yPos, false);
             } else {
-                solve(backXPos, backYPos, backTracking);
+                solve(backXPos, backYPos, true);
             }
 
+        } else if (valid(xPos, yPos)) { //the tile is valid
+            if (backTracking) {
+                if (game[xPos][yPos].increment()) {
+                    solve(xPos, yPos, false);
+                } else {
+                    solve(backXPos, backYPos, true);
+                }
+            } else {
+                solve(forXPos, forYPos, false);
+            }
         }
-    }
 
+    }
 
 }

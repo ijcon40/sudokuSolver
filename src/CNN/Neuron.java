@@ -34,7 +34,6 @@ public class Neuron {
     }
 
     private void HeEtAlWeights(){
-        //This may not overwrite the
         for(double weight: weights){
             weight = Math.random()*Math.sqrt(2/weights.length);
         }

@@ -12,6 +12,25 @@ public class Board {
         }
     }
 
+    public Board(int[] array) {
+        game = new Tile[9][9];
+        int y = -1;
+
+        for (int i = 0; i < 81; i++) {
+
+            if (i % 9 == 0) {
+                y++;
+            }
+
+            if (array[i] != 0) {
+                Tile newTile = new Tile(array[i]);
+                game[i % 9][y] = newTile;
+            }
+
+
+        }
+    }
+
     public void setTile(int xPos, int yPos, int num) {
         Tile newTile = new Tile(num);
         game[xPos][yPos] = newTile;

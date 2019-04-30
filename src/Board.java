@@ -1,3 +1,4 @@
+import java.util.Stack;
 
 public class Board {
 
@@ -90,11 +91,14 @@ public class Board {
         return true;
     }
 
-    public void solve(int xPos, int yPos, boolean backTracking) {
+    public paramObj solve(paramObj params) {
+        int xPos = params.x;
+        int yPos = params.y;
+        boolean backTracking = params.backTracking;
 
         print();
         System.out.println(xPos + " " + yPos);
-
+        //System.out.println("Guess: "+game[xPos][yPos]);
 
         int forXPos, forYPos = yPos;
         int backXPos, backYPos = yPos;
@@ -112,38 +116,67 @@ public class Board {
 
         if (yPos == 9) { //base case
             print();
+            return null;
         } else if (game[xPos][yPos].getKnown() && backTracking) { //on a known tile and back tracking
 
             if (game[backXPos][backYPos].getKnown()) {
-                solve(backXPos, backYPos, true);
+                return new paramObj(backXPos, backYPos, true);
             } else {
-                solve(backXPos, backYPos, false);
+                return new paramObj(backXPos, backYPos, true);
             }
 
         } else if (game[xPos][yPos].getKnown() && !backTracking) { //on a known tile and not back tracking
 
-            solve(forXPos, forYPos, false);
+            return new paramObj(forXPos, forYPos, false);
 
         } else if (!valid(xPos, yPos)) { //the tile is invalid
 
             if (game[xPos][yPos].increment()) {
-                solve(xPos, yPos, false);
+                return new paramObj(xPos, yPos, false);
             } else {
-                solve(backXPos, backYPos, true);
+                return new paramObj(backXPos, backYPos, true);
             }
 
         } else if (valid(xPos, yPos)) { //the tile is valid
             if (backTracking) {
                 if (game[xPos][yPos].increment()) {
-                    solve(xPos, yPos, false);
+                    return new paramObj(xPos, yPos, false);
                 } else {
-                    solve(backXPos, backYPos, true);
+                    return new paramObj(backXPos, backYPos, true);
                 }
             } else {
-                solve(forXPos, forYPos, false);
+                return new paramObj(forXPos, forYPos, false);
             }
         }
+        return params;
 
+    }
+
+    public void solveStack(){
+        int x = 0; int y = 0; boolean backTracking = false;
+        Stack<paramObj> paramStack = new Stack();
+        paramStack.push(new paramObj(x,y,backTracking));
+        while(!paramStack.empty()){
+            paramObj argument = paramStack.peek();
+            paramObj nextParams = solve(argument);
+            if (nextParams==null){
+                break;
+            }
+            else{
+                paramStack.push(nextParams);
+            }
+
+        }
+    }
+
+    private class paramObj{
+        public int x;
+        public int y;
+        public boolean backTracking;
+
+        paramObj(int x, int y, boolean backTracking){
+            this.x =x; this.y=y; this.backTracking = backTracking;
+        }
     }
 
 }

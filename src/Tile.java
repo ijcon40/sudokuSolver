@@ -5,8 +5,6 @@ public class Tile {
 
     private int val;
     private boolean known;
-    private ArrayList<Integer> possibleInts;
-    private ArrayList<Integer> possibleIntsSave;
 
     public Tile() {
         val = 0;

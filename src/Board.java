@@ -153,9 +153,9 @@ public class Board {
     }
 
     public void solveStack(){
-        int x = 0; int y = 0; boolean backTracking = false;
+        int x = 0; int y = 0;
         Stack<paramObj> paramStack = new Stack();
-        paramStack.push(new paramObj(x,y,backTracking));
+        paramStack.push(new paramObj(x,y,false));
         while(!paramStack.empty()){
             paramObj argument = paramStack.peek();
             paramObj nextParams = solve(argument);

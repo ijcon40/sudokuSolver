@@ -21,13 +21,14 @@ public class Filter {
         //we need to select a section of the flat layer, with the same dimensions as the filter
         //Assume correct zero padding
         //Also that filters are odd length and square
-        double[][] activationlayer = new double[flatLayer.length-((weightArray.length-1)/2)][flatLayer[0].length-((weightArray.length-1)/2)];
-        for(int x = (weightArray.length-1)/2; x<flatLayer.length; x++){
-            for(int y = 0; y<flatLayer[0].length; y++){
-
+        int padding = (weightArray.length-1)/2;
+        double[][] activationLayer = new double[flatLayer.length-((weightArray.length-1)/2)][flatLayer[0].length-((weightArray.length-1)/2)];
+        for(int x = 0; x<flatLayer.length-weightArray.length; x++){
+            for(int y = 0; y<flatLayer[0].length-weightArray[0].length; y++){
+                activationLayer[x-padding][y-padding]=dotMultiplication(getArraySub(x, x+weightArray.length, y, y+weightArray.length, flatLayer));
             }
         }
-        return null;
+        return activationLayer;
     }
 
     private double[][] getArraySub(int xo, int xf, int yo, int yf, double[][] sourceArray){
@@ -50,4 +51,6 @@ public class Filter {
         }
         return total;
     }
+
+    //TODO: get the backpropagation down, and add calculus based weight adjustments
 }

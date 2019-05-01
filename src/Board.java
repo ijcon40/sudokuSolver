@@ -41,18 +41,14 @@ public class Board {
         return game[xPos][yPos];
     }
 
-    public String getTileInfo(int xPos, int yPos) {
-        return "(" + xPos + ", " + yPos + ") " + this.getTile(xPos, yPos).toString();
-    }
-
     public void print() {
         int count1 = 0;
         for (int i = 0; i < 9; i++) {
             String line = "";
 
-            line = game[0][i].getVal() + " " + game[1][i].getVal() + " " + game[2][i].getVal() + "  ";
-            line = line + game[3][i].getVal() + " " + game[4][i].getVal() + " " + game[5][i].getVal() + "  ";
-            line = line + game[6][i].getVal() + " " + game[7][i].getVal() + " " + game[8][i].getVal() + "  ";
+            line = game[0][i].getDisplayVal() + " " + game[1][i].getDisplayVal() + " " + game[2][i].getDisplayVal() + "  ";
+            line = line + game[3][i].getDisplayVal() + " " + game[4][i].getDisplayVal() + " " + game[5][i].getDisplayVal() + "  ";
+            line = line + game[6][i].getDisplayVal() + " " + game[7][i].getDisplayVal() + " " + game[8][i].getDisplayVal() + "  ";
             System.out.println(line);
 
             count1++;
@@ -97,7 +93,8 @@ public class Board {
         boolean backTracking = params.backTracking;
 
         print();
-        System.out.println(xPos + " " + yPos);
+        System.out.println();
+        //System.out.println(xPos + " " + yPos);
         //System.out.println("Guess: "+game[xPos][yPos]);
 
         int forXPos, forYPos = yPos;

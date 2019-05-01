@@ -4,20 +4,19 @@ import java.util.ArrayList;
 public class Tile {
 
     private int val;
+    String displayVal;
     private boolean known;
 
     public Tile() {
         val = 0;
         known = false;
+        displayVal = "_";
     }
 
     public Tile(int num) {
         val = num;
         known = true;
-    }
-
-    public void setVal(int num) {
-        val = num;
+        displayVal = "" + num;
     }
 
     public int getVal() {
@@ -29,11 +28,17 @@ public class Tile {
     public boolean increment() {
         if (val < 9) {
             val++;
+            displayVal = "" + val;
             return true;
         } else {
             val = 0;
+            displayVal = "_";
             return false;
         }
+    }
+
+    public String getDisplayVal() {
+        return displayVal;
     }
 
     public String toString() {

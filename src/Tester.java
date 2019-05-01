@@ -1,4 +1,6 @@
 
+import java.util.Scanner;
+
 public class Tester {
 
     public static void main(String[] args) {
@@ -42,8 +44,11 @@ public class Tester {
         b.setTile(0,8,5);
         b.setTile(6,8,8);
         // System.out.println(b.getTileInfo(0, 0));
-
         b.print();
+
+        Scanner in = new Scanner(System.in);
+        String nothing = in.next();
+
         b.solveStack();
     }
 

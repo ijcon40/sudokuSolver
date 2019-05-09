@@ -17,7 +17,7 @@ public class Filter {
         }
     }
 
-    private double[][] convolve(double[][] flatLayer){
+    public double[][] convolve(double[][] flatLayer){
         //we need to select a section of the flat layer, with the same dimensions as the filter
         //Assume correct zero padding
         //Also that filters are odd length and square

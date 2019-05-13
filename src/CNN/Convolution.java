@@ -26,7 +26,16 @@ public class Convolution {
 
     //Part 2: get dO/dF for output via a filter
 
+    private void backPropActivationLayers(double[][][] dOdA){
+        //change in output with respect to activation layer
+        //format: z,x,y
 
+    }
+
+    private void backPropFilters(double[][][] dOdF){
+        //change in output with respect to filter layer
+
+    }
 
 
 }

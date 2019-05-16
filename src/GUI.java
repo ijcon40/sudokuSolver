@@ -48,9 +48,7 @@ public class GUI {
         solveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Board b = makeBoardFromUI();
-                b.solveStack();
-                updateUIfromBoard(b);
+                solveUI();
             }
         });
         fullPanel.add(BorderLayout.CENTER, solveButton);
@@ -78,6 +76,12 @@ public class GUI {
         }
     }
 
+    public void solveUI(){
+        Board b = makeBoardFromUI();
+        b.solveStack();
+        updateUIfromBoard(b);
+    }
+
 
 
 
@@ -98,6 +102,7 @@ public class GUI {
         private int tileSize = 60;
         private int strokeWidth = 15;
         private boolean render;
+        private boolean original = false;
         int xIndex; int yIndex;
 
         public Tile(boolean render, int x, int y){
@@ -117,9 +122,14 @@ public class GUI {
             addKeyListener(new KeyListener() {
                 @Override
                 public void keyTyped(KeyEvent e) {
+                    System.out.println(e.getKeyChar()-48);
                     int value = e.getKeyChar()-48;
-                    if(value<10){
-                        setValue(value);
+                    if(value<10&&value>=0){
+                        setValue(value, true);
+                    }
+                    if(value==-38){
+                        solveUI();
+                        //This is just the enter key
                     }
                 }
 
@@ -144,7 +154,7 @@ public class GUI {
             if(render) {
                 Graphics2D graphics2D = (Graphics2D) graphics;
 
-                graphics2D.setPaint(selected ? getForeground().darker() : getForeground());
+                //graphics2D.setPaint(selected ? getForeground().darker() : getForeground());
                 if (value != 0) {
                     int fontSize = tileSize / 2;
                     Font font = new Font("TimesRoman", Font.PLAIN, fontSize);
@@ -154,7 +164,12 @@ public class GUI {
                     int y = ((tileSize - metrics.getHeight()) / 2) + metrics.getAscent();
                     graphics2D.setFont(font);
                     graphics.drawRect(0, 0, tileSize, tileSize);
+                    graphics2D.setColor(Color.lightGray);
+                    if(original){
+                        graphics2D.setColor(Color.BLACK);
+                    }
                     graphics2D.drawString(stringType, x, y);
+                    graphics2D.setColor(Color.black);
                     graphics2D.setStroke(new BasicStroke(strokeWidth));
                 } else {
                     graphics2D.drawRect(0, 0, tileSize, tileSize);
@@ -186,8 +201,15 @@ public class GUI {
         }
 
         public void setValue(int value) {
+            setValue(value, false);
+        }
+
+        private void setValue(int value, boolean original){
             this.value = value;
-            selected=false;
+            this.selected=false;
+            if(original){
+                this.original = original;
+            }
             repaint();
         }
 

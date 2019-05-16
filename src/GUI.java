@@ -131,6 +131,10 @@ public class GUI {
                         solveUI();
                         //This is just the enter key
                     }
+                    if(value==-40){
+                        original = false;
+                        setValue(0, false);
+                    }
                 }
 
                 @Override
@@ -153,8 +157,6 @@ public class GUI {
         public void paintComponent(Graphics graphics){
             if(render) {
                 Graphics2D graphics2D = (Graphics2D) graphics;
-
-                //graphics2D.setPaint(selected ? getForeground().darker() : getForeground());
                 if (value != 0) {
                     int fontSize = tileSize / 2;
                     Font font = new Font("TimesRoman", Font.PLAIN, fontSize);
